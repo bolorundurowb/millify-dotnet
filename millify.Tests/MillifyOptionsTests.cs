@@ -10,7 +10,7 @@ public class MillifyOptionsTests
         options.Precision.Should().Be(1);
         options.Lowercase.Should().BeFalse();
         options.SpaceBeforeUnit.Should().BeFalse();
-        options.Units.Should().BeNull();
+        options.Units.Should().Equal(string.Empty, "k", "m", "g", "t", "p", "e", "z", "y");
     }
 
     [Fact]
