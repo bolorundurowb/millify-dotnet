@@ -37,4 +37,4 @@ jobs:
       - name: Upload coverage report to Coveralls
         env:
           COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
-        run: csmacnz.Coveralls --opencover -i ./millify.Tests/bin/Release/net6.0/coverage.xml
+        run: csmacnz.Coveralls --opencover -i ./millify.Tests/coverage.opencover.xml
