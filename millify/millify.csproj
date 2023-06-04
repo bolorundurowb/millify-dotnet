@@ -16,9 +16,10 @@
         <RepositoryUrl>https://github.com/bolorundurowb/millify-dotnet</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
         <PackageTags>millify, millify-dotnet, human-readable, shorten, numbers</PackageTags>
-        <PackageReleaseNotes>Initial release</PackageReleaseNotes>
+        <PackageReleaseNotes>Simplify options</PackageReleaseNotes>
         <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <Version>1.0.1</Version>
     </PropertyGroup>
 
 </Project>
