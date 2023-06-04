@@ -2,6 +2,8 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "millify", "millify\millify.csproj", "{1030C056-BB23-4E35-9B7B-D4CE22C48D0B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "millify.Tests", "millify.Tests\millify.Tests.csproj", "{F03AA3EA-2B4C-4BD4-8B39-A959C67C5581}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +14,9 @@ Global
 		{1030C056-BB23-4E35-9B7B-D4CE22C48D0B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1030C056-BB23-4E35-9B7B-D4CE22C48D0B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1030C056-BB23-4E35-9B7B-D4CE22C48D0B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F03AA3EA-2B4C-4BD4-8B39-A959C67C5581}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F03AA3EA-2B4C-4BD4-8B39-A959C67C5581}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F03AA3EA-2B4C-4BD4-8B39-A959C67C5581}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F03AA3EA-2B4C-4BD4-8B39-A959C67C5581}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
