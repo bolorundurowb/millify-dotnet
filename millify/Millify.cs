@@ -2,9 +2,15 @@
 
 public static class Millify
 {
-    private static readonly string[] DefaultUnits = { "k", "m", "g", "t", "p", "e", "z", "y" };
+    private static readonly string[] DefaultUnits = { string.Empty, "k", "m", "g", "t", "p", "e", "z", "y" };
 
-    public static string Shorten(double number, MillifyOptions? options = null)
+    public static string Shorten(long number, MillifyOptions? options = null) =>
+        Shorten(Convert.ToDecimal(number), options);
+
+    public static string Shorten(double number, MillifyOptions? options = null) =>
+        Shorten(Convert.ToDecimal(number), options);
+
+    public static string Shorten(decimal number, MillifyOptions? options = null)
     {
         options ??= new();
         var isNegative = number < 0;
