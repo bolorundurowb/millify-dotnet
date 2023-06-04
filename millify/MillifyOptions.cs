@@ -8,14 +8,14 @@ public class MillifyOptions
     
     public bool SpaceBeforeUnit { get; set; }
     
-    public string[]? Units { get; set; }
+    public string[] Units { get; set; }
     
     public MillifyOptions(int precision = 1, bool lowercase = false, bool spaceBeforeUnit = false,
         IEnumerable<string>? units = null)
     {
         precision.Validate(x => x >= 1, "Invalid precision value.");
         
-        Units = units?.ToArray();
+        Units = units?.ToArray() ?? new[]{ string.Empty, "k", "m", "g", "t", "p", "e", "z", "y" };;
         Precision = precision;
         Lowercase = lowercase;
         SpaceBeforeUnit = spaceBeforeUnit;

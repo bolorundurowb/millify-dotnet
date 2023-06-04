@@ -2,8 +2,6 @@
 
 public static class Millify
 {
-    private static readonly string[] DefaultUnits = { string.Empty, "k", "m", "g", "t", "p", "e", "z", "y" };
-
     public static string Shorten(long number, MillifyOptions? options = null) =>
         Shorten(Convert.ToDecimal(number), options);
 
@@ -14,12 +12,11 @@ public static class Millify
     {
         options ??= new();
         var isNegative = number < 0;
-        var units = options.Units ?? DefaultUnits;
 
         var absoluteValue = Math.Abs(number);
         var unitIndex = 0;
 
-        while (absoluteValue >= 1000 && unitIndex < units.Length - 1)
+        while (absoluteValue >= 1000 && unitIndex < options.Units.Length - 1)
         {
             absoluteValue /= 1000;
             unitIndex++;
@@ -33,7 +30,7 @@ public static class Millify
         if (options.Lowercase)
             formattedNumber = formattedNumber.ToUpper();
 
-        var unit = units[unitIndex];
+        var unit = options.Units[unitIndex];
         var casedUnit = options.Lowercase
             ? unit.ToLowerInvariant()
             : unit.ToUpperInvariant();
