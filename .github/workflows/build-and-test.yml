@@ -32,10 +32,9 @@ jobs:
         run: dotnet test --configuration Release /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
 
       - name: Install Coveralls action
-        run: dotnet tool install -g coveralls.net --version 2.3.0
+        run: dotnet tool install --global coveralls.net --version 4.0.1
 
       - name: Upload coverage report to Coveralls
         env:
           COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
-        run: coveralls --opencover -i ./path/to/coverage.xml
-
+        run: csmacnz.Coveralls --opencover -i ./millify.Tests/bin/Release/net7.0/coverage.xml
