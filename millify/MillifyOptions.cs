@@ -15,7 +15,7 @@ public class MillifyOptions
     {
         precision.Validate(x => x >= 1, "Invalid precision value.");
         
-        Units = units?.ToArray() ?? new[]{ string.Empty, "k", "m", "g", "t", "p", "e", "z", "y" };
+        Units = units?.ToArray() ?? Utilities.DefaultUnits;
         Precision = precision;
         Lowercase = lowercase;
         SpaceBeforeUnit = spaceBeforeUnit;
