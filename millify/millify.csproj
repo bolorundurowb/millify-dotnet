@@ -1,5 +1,4 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
     <PropertyGroup>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
@@ -9,8 +8,7 @@
         <Title>Millify</Title>
         <Authors>bolorundurowb</Authors>
         <Description>A library to convert numbers to human readable formats.</Description>
-        <Copyright> ©2023-2024 Winner-Timothy Bolorunduro
-</Copyright>
+        <Copyright>©2023-2024 Winner-Timothy Bolorunduro</Copyright>
         <PackageProjectUrl>https://github.com/bolorundurowb/millify-dotnet</PackageProjectUrl>
         <PackageLicenseUrl>https://github.com/bolorundurowb/millify-dotnet/blob/master/LICENSE</PackageLicenseUrl>
         <RepositoryUrl>https://github.com/bolorundurowb/millify-dotnet</RepositoryUrl>
@@ -22,6 +20,10 @@
         <Version>1.0.2</Version>
         <AssemblyVersion>1.0.2</AssemblyVersion>
         <FileVersion>1.0.2</FileVersion>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
     </PropertyGroup>
 
+    <ItemGroup>
+        <None Include="..\README.md" Pack="true" PackagePath="\"/>
+    </ItemGroup>
 </Project>
