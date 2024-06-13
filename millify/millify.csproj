@@ -9,17 +9,19 @@
         <Title>Millify</Title>
         <Authors>bolorundurowb</Authors>
         <Description>A library to convert numbers to human readable formats.</Description>
-        <Copyright> ©2023
+        <Copyright> ©2023-2024 Winner-Timothy Bolorunduro
 </Copyright>
         <PackageProjectUrl>https://github.com/bolorundurowb/millify-dotnet</PackageProjectUrl>
         <PackageLicenseUrl>https://github.com/bolorundurowb/millify-dotnet/blob/master/LICENSE</PackageLicenseUrl>
         <RepositoryUrl>https://github.com/bolorundurowb/millify-dotnet</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
         <PackageTags>millify, millify-dotnet, human-readable, shorten, numbers</PackageTags>
-        <PackageReleaseNotes>Simplify options</PackageReleaseNotes>
+        <PackageReleaseNotes>- add in class documentation</PackageReleaseNotes>
         <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-        <Version>1.0.1</Version>
+        <Version>1.0.2</Version>
+        <AssemblyVersion>1.0.2</AssemblyVersion>
+        <FileVersion>1.0.2</FileVersion>
     </PropertyGroup>
 
 </Project>
