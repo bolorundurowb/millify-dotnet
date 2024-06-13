@@ -9,7 +9,7 @@
         <Title>Millify</Title>
         <Authors>bolorundurowb</Authors>
         <Description>A library to convert numbers to human readable formats.</Description>
-        <Copyright> ©2023
+        <Copyright> ©2023-2024 Winner-Timothy Bolorunduro
 </Copyright>
         <PackageProjectUrl>https://github.com/bolorundurowb/millify-dotnet</PackageProjectUrl>
         <PackageLicenseUrl>https://github.com/bolorundurowb/millify-dotnet/blob/master/LICENSE</PackageLicenseUrl>
