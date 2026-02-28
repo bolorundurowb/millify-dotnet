@@ -1,6 +1,6 @@
 # millify-dotnet 📊
 
-[![Coverage Status](https://coveralls.io/repos/github/bolorundurowb/millify-dotnet/badge.svg)](https://coveralls.io/github/bolorundurowb/millify-dotnet)  [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)  ![NuGet Version](https://img.shields.io/nuget/v/millify)
+[![Build, Test & Coverage](https://github.com/bolorundurowb/millify-dotnet/actions/workflows/build-and-test.yml/badge.svg)](https://github.com/bolorundurowb/millify-dotnet/actions/workflows/build-and-test.yml) [![codecov](https://codecov.io/gh/bolorundurowb/millify-dotnet/graph/badge.svg?token=8PIHY52HJS)](https://codecov.io/gh/bolorundurowb/millify-dotnet)  [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)  ![NuGet Version](https://img.shields.io/nuget/v/millify)
 
 ---
 
