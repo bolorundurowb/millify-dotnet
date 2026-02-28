@@ -1,40 +1,37 @@
-name: Build and Test
+name: Build, Test & Coverage
 
 on:
   push:
-    branches:
-      - master
+    branches: [ master ]
   pull_request:
-    branches:
-      - master
   workflow_dispatch:
 
 jobs:
-  build:
+  build-and-test:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
-      - name: Setup .NET
-        uses: actions/setup-dotnet@v3
+      - name: Setup .NET 10 SDK
+        uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: '6.x'
+          dotnet-version: '10.x'
 
       - name: Restore dependencies
         run: dotnet restore
+        working-directory: ./src
 
-      - name: Build project
-        run: dotnet build --configuration Release
+      - name: Build all projects
+        run: dotnet build --configuration Release --no-restore
+        working-directory: ./src
 
-      - name: Run unit tests and generate coverage report
-        run: dotnet test --configuration Release /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
+      - name: Run tests with code coverage
+        run: dotnet test --configuration Release --no-build /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:CoverletOutput=../../coverage/coverage.cobertura.xml
+        working-directory: ./src
 
-      - name: Install Coveralls action
-        run: dotnet tool install --global coveralls.net --version 4.0.1
-
-      - name: Upload coverage report to Coveralls
-        env:
-          COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
-        run: csmacnz.Coveralls --opencover -i ./millify.Tests/coverage.opencover.xml
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v5
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          directory: ./coverage/
+          fail_ci_if_error: true
