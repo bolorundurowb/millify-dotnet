@@ -3,27 +3,25 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <RootNamespace>MillifyDotnet</RootNamespace>
-        <LangVersion>10</LangVersion>
+        <LangVersion>14</LangVersion>
         <TargetFrameworks>netstandard1.6;netstandard2.0;netstandard2.1</TargetFrameworks>
         <Title>Millify</Title>
-        <Authors>bolorundurowb</Authors>
+        <Authors>Winner-Timothy Bolorunduro</Authors>
         <Description>A library to convert numbers to human readable formats.</Description>
-        <Copyright>©2023-2024 Winner-Timothy Bolorunduro</Copyright>
+        <Copyright>©2023-2026 Winner-Timothy Bolorunduro</Copyright>
         <PackageProjectUrl>https://github.com/bolorundurowb/millify-dotnet</PackageProjectUrl>
         <PackageLicenseUrl>https://github.com/bolorundurowb/millify-dotnet/blob/master/LICENSE</PackageLicenseUrl>
         <RepositoryUrl>https://github.com/bolorundurowb/millify-dotnet</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
         <PackageTags>millify, millify-dotnet, human-readable, shorten, numbers</PackageTags>
-        <PackageReleaseNotes>- add in class documentation</PackageReleaseNotes>
+        <PackageReleaseNotes>- update dependencies</PackageReleaseNotes>
         <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-        <Version>1.0.2</Version>
-        <AssemblyVersion>1.0.2</AssemblyVersion>
-        <FileVersion>1.0.2</FileVersion>
+        <Version>1.0.3</Version>
         <PackageReadmeFile>README.md</PackageReadmeFile>
     </PropertyGroup>
 
     <ItemGroup>
-        <None Include="..\README.md" Pack="true" PackagePath="\"/>
+        <None Include="..\..\README.md" Pack="true" PackagePath="\"/>
     </ItemGroup>
 </Project>
