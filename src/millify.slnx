@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="millify.Tests/millify.Tests.csproj" />
+  <Project Path="millify/millify.csproj" />
+</Solution>
