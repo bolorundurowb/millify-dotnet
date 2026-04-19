@@ -2,10 +2,10 @@
 
 internal static class Utilities
 {
-    internal static readonly string[] DefaultUnits = { string.Empty, "k", "m", "g", "t", "p", "e", "z", "y" };
+    internal static readonly string[] DefaultUnits = [string.Empty, "k", "m", "g", "t", "p", "e", "z", "y"];
 
     internal static readonly string[] DefaultBinaryUnits =
-        { string.Empty, "ki", "mi", "gi", "ti", "pi", "ei", "zi", "yi" };
+        [string.Empty, "ki", "mi", "gi", "ti", "pi", "ei", "zi", "yi"];
 
     internal static void Validate<T>(this T actualValue, Func<T, bool> predicate, string message)
     {
