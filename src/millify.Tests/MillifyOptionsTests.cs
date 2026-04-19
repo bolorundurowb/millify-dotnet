@@ -10,6 +10,10 @@ public class MillifyOptionsTests
         options.Precision.Should().Be(1);
         options.Lowercase.Should().BeFalse();
         options.SpaceBeforeUnit.Should().BeFalse();
+        options.ScaleBase.Should().Be(MillifyScaleBase.Decimal);
+        options.TrimInsignificantZeros.Should().BeTrue();
+        options.SmartPrecision.Should().BeFalse();
+        options.Culture.Should().BeNull();
         options.Units.Should().Equal(string.Empty, "k", "m", "g", "t", "p", "e", "z", "y");
     }
 
