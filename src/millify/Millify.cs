@@ -245,7 +245,7 @@ public static class Millify
     {
         var sourceCulture = culture ?? CultureInfo.InvariantCulture;
         var nfi = (NumberFormatInfo)sourceCulture.NumberFormat.Clone();
-        nfi.NumberGroupSizes = new[] { 0 };
+        nfi.NumberGroupSizes = [0];
         return nfi;
     }
 

@@ -6,21 +6,21 @@ namespace MillifyDotnet.Tests;
 public class MillifyFeaturesTests
 {
     [Fact]
-    public void Shorten_WithTrimZerosEnabled_RemovesTrailingFractionalZeros()
+    public void Shorten_WhenTrimInsignificantZerosIsTrue_RemovesTrailingFractionalZeros()
     {
         var options = new MillifyOptions(precision: 2, trimInsignificantZeros: true);
         Millify.Shorten(2500, options).Should().Be("2.5K");
     }
 
     [Fact]
-    public void Shorten_WithTrimZerosDisabled_PreservesTrailingFractionalZeros()
+    public void Shorten_WhenTrimInsignificantZerosIsFalse_PreservesTrailingFractionalZeros()
     {
         var options = new MillifyOptions(precision: 2, trimInsignificantZeros: false);
         Millify.Shorten(2500, options).Should().Be("2.50K");
     }
 
     [Fact]
-    public void Shorten_WithSmartPrecision_AdjustsFractionalPlacesByMagnitude()
+    public void Shorten_WhenSmartPrecisionIsTrue_AdjustsFractionalPlacesByMagnitude()
     {
         var options = new MillifyOptions(precision: 2, smartPrecision: true);
         Millify.Shorten(9990, options).Should().Be("9.99K");
@@ -28,7 +28,7 @@ public class MillifyFeaturesTests
     }
 
     [Fact]
-    public void Shorten_WithBinaryScaling_UsesIecSuffixesAndBase1024()
+    public void Shorten_WhenScaleBaseIsBinary_UsesIecSuffixesAndBase1024()
     {
         var options = new MillifyOptions(precision: 2, scaleBase: MillifyScaleBase.Binary);
         Millify.Shorten(1024, options).Should().Be("1Ki");
@@ -36,7 +36,7 @@ public class MillifyFeaturesTests
     }
 
     [Fact]
-    public void Shorten_WithBigIntegerLargeLiteral_ScalesIntoExaRangeWithTwoDecimals()
+    public void Shorten_WhenValueIsLargeBigInteger_ScalesIntoExaRangeWithTwoDecimals()
     {
         var value = BigInteger.Parse("12345678901234567890");
         var options = new MillifyOptions(precision: 2);
@@ -44,14 +44,14 @@ public class MillifyFeaturesTests
     }
 
     [Fact]
-    public void Shorten_WithBigIntegerSmallValue_PreservesFractionalThousandsStep()
+    public void Shorten_WhenValueIsSmallBigInteger_PreservesFractionalThousandsStep()
     {
         var options = new MillifyOptions(precision: 1);
         Millify.Shorten(new BigInteger(1234), options).Should().Be("1.2K");
     }
 
     [Fact]
-    public void Shorten_WithFrenchCulture_UsesCommaAsDecimalSeparator()
+    public void Shorten_WhenCultureIsFrench_UsesCommaAsDecimalSeparator()
     {
         var culture = new CultureInfo("fr-FR");
         var options = new MillifyOptions(precision: 1, culture: culture);
@@ -59,7 +59,7 @@ public class MillifyFeaturesTests
     }
 
     [Fact]
-    public void FormatScaled_WithDecomposedValueAndGermanCulture_AllowsRoundTripWithShorten()
+    public void FormatScaled_WhenCultureIsGermanAndSmartPrecisionIsTrue_MatchesShortenOutput()
     {
         var options = new MillifyOptions(precision: 2, smartPrecision: true, culture: new CultureInfo("de-DE"));
         var parts = Millify.Decompose(9990m, options);
@@ -69,7 +69,7 @@ public class MillifyFeaturesTests
     }
 
     [Fact]
-    public void MillifiedNumber_ToFormattedString_AgreesWithShorten()
+    public void MillifiedNumber_ToFormattedString_WithOptions_MatchesShortenOutput()
     {
         var options = new MillifyOptions(precision: 2);
         var parts = Millify.Decompose(2500m, options);
@@ -77,7 +77,7 @@ public class MillifyFeaturesTests
     }
 
     [Fact]
-    public void TryFormat_WithSufficientBuffer_WritesCompleteAbbreviation()
+    public void TryFormat_WhenBufferIsSufficient_ReturnsTrueAndWritesAbbreviation()
     {
         Span<char> buffer = stackalloc char[32];
         Millify.TryFormat(1234.5m, buffer, out var written).Should().BeTrue();
@@ -86,7 +86,7 @@ public class MillifyFeaturesTests
     }
 
     [Fact]
-    public void TryFormat_WithInsufficientBuffer_ReturnsFalse()
+    public void TryFormat_WhenBufferIsInsufficient_ReturnsFalseAndWritesNothing()
     {
         Span<char> buffer = stackalloc char[2];
         Millify.TryFormat(12345678901234567890m, buffer, out var written).Should().BeFalse();

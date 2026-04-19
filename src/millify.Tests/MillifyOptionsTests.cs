@@ -23,7 +23,7 @@ public class MillifyOptionsTests
         const int precision = 2;
         const bool lowercase = true;
         const bool spaceBeforeUnit = true;
-        IEnumerable<string> units = new[] { "K", "M", "B" };
+        IEnumerable<string> units = ["K", "M", "B"];
 
         var options = new MillifyOptions(precision, lowercase, spaceBeforeUnit, units);
 
@@ -34,7 +34,7 @@ public class MillifyOptionsTests
     }
 
     [Fact]
-    public void MillifyOptions_WithInvalidPrecision_ThrowsArgumentException()
+    public void MillifyOptions_WhenPrecisionIsZero_ThrowsArgumentException()
     {
         FluentActions.Invoking(() => new MillifyOptions(0))
             .Should().Throw<ArgumentException>()
@@ -42,26 +42,26 @@ public class MillifyOptionsTests
     }
 
     [Fact]
-    public void MillifyOptions_WithEmptyUnitsArray_ThrowsArgumentException()
+    public void MillifyOptions_WhenUnitsArrayIsEmpty_ThrowsArgumentException()
     {
-        FluentActions.Invoking(() => new MillifyOptions(units: Array.Empty<string>()))
+        FluentActions.Invoking(() => new MillifyOptions(units: []))
             .Should().Throw<ArgumentException>()
             .WithMessage("Units must contain at least one entry.*");
     }
 
     [Fact]
-    public void MillifyOptions_WithNullUnitEntry_ThrowsArgumentException()
+    public void MillifyOptions_WhenUnitsContainsNull_ThrowsArgumentException()
     {
-        FluentActions.Invoking(() => new MillifyOptions(units: new[] { "", "K", null! }))
+        FluentActions.Invoking(() => new MillifyOptions(units: ["", "K", null!]))
             .Should().Throw<ArgumentException>()
             .WithMessage("Units[2] must not be null.*");
     }
 
     [Fact]
-    public void MillifyOptions_WhenUnitsSetToEmptyArray_ThrowsArgumentException()
+    public void MillifyOptions_WhenUnitsPropertySetToEmptyArray_ThrowsArgumentException()
     {
         var options = new MillifyOptions();
-        FluentActions.Invoking(() => options.Units = Array.Empty<string>())
+        FluentActions.Invoking(() => options.Units = [])
             .Should().Throw<ArgumentException>();
     }
 }
