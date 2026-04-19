@@ -7,13 +7,13 @@
         <TargetFrameworks>netstandard1.6;netstandard2.0;netstandard2.1</TargetFrameworks>
         <Title>Millify</Title>
         <Authors>Winner-Timothy Bolorunduro</Authors>
-        <Description>A library to convert numbers to human readable formats.</Description>
+        <Description>Format large numbers into concise, human-readable strings (K, M, B) for .NET apps.</Description>
         <Copyright>©2023-2026 Winner-Timothy Bolorunduro</Copyright>
         <PackageProjectUrl>https://github.com/bolorundurowb/millify-dotnet</PackageProjectUrl>
         <PackageLicenseUrl>https://github.com/bolorundurowb/millify-dotnet/blob/master/LICENSE</PackageLicenseUrl>
         <RepositoryUrl>https://github.com/bolorundurowb/millify-dotnet</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
-        <PackageTags>millify, millify-dotnet, human-readable, shorten, numbers</PackageTags>
+        <PackageTags>millify,millify-dotnet,number-formatting,human-readable,abbreviations,analytics,dashboards,netstandard</PackageTags>
         <PackageReleaseNotes>- update dependencies</PackageReleaseNotes>
         <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
