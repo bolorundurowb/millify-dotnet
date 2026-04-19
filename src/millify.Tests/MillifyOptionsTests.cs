@@ -64,4 +64,20 @@ public class MillifyOptionsTests
         FluentActions.Invoking(() => options.Units = [])
             .Should().Throw<ArgumentException>();
     }
+
+    [Fact]
+    public void MillifyOptions_WhenUnitsPropertySetToNull_ThrowsArgumentNullException()
+    {
+        var options = new MillifyOptions();
+        FluentActions.Invoking(() => options.Units = null!)
+            .Should().Throw<ArgumentNullException>()
+            .WithParameterName(nameof(MillifyOptions.Units));
+    }
+
+    [Fact]
+    public void MillifyOptions_WhenScaleBaseIsBinaryAndUnitsOmitted_UsesDefaultBinarySuffixes()
+    {
+        var options = new MillifyOptions(scaleBase: MillifyScaleBase.Binary, units: null);
+        options.Units.Should().Equal(string.Empty, "ki", "mi", "gi", "ti", "pi", "ei", "zi", "yi");
+    }
 }

@@ -1,5 +1,6 @@
 using System.Globalization;
 using System.Numerics;
+using System.Reflection;
 
 namespace MillifyDotnet.Tests;
 
@@ -91,5 +92,107 @@ public class MillifyFeaturesTests
         Span<char> buffer = stackalloc char[2];
         Millify.TryFormat(12345678901234567890m, buffer, out var written).Should().BeFalse();
         written.Should().Be(0);
+    }
+
+    [Fact]
+    public void Decompose_OverloadsForIntegralAndFloatingPoint_MatchDecimalPath()
+    {
+        const long asLong = 1_234_567L;
+        const double asDouble = 1_234_567d;
+        var fromLong = Millify.Decompose(asLong);
+        var fromDouble = Millify.Decompose(asDouble);
+        var fromDecimal = Millify.Decompose(1_234_567m);
+        fromLong.Should().Be(fromDecimal);
+        fromDouble.Should().Be(fromDecimal);
+    }
+
+    [Fact]
+    public void TryFormat_OverloadsForLongDoubleAndBigInteger_WriteSameAsShorten()
+    {
+        Span<char> buffer = stackalloc char[64];
+        var options = new MillifyOptions(precision: 2);
+
+        Millify.TryFormat(12_345L, buffer, out var wLong, options).Should().BeTrue();
+        buffer.Slice(0, wLong).ToString().Should().Be(Millify.Shorten(12_345L, options));
+
+        Millify.TryFormat(12_345.67d, buffer, out var wDouble, options).Should().BeTrue();
+        buffer.Slice(0, wDouble).ToString().Should().Be(Millify.Shorten(12_345.67d, options));
+
+        var bi = new BigInteger(12_345);
+        Millify.TryFormat(bi, buffer, out var wBi, options).Should().BeTrue();
+        buffer.Slice(0, wBi).ToString().Should().Be(Millify.Shorten(bi, options));
+    }
+
+    [Fact]
+    public void MillifiedNumber_ToFormattedString_WhenOptionsIsNull_UsesDefaultFormatting()
+    {
+        var parts = new MillifiedNumber(1.2m, 1);
+        parts.ToFormattedString(null).Should().Be(Millify.FormatScaled(parts, null));
+    }
+
+    [Fact]
+    public void Decompose_WhenBigIntegerIsNegative_AppliesSignToScaledMagnitude()
+    {
+        var parts = Millify.Decompose(new BigInteger(-2500));
+        parts.ScaledValue.Should().Be(-2.5m);
+        parts.UnitIndex.Should().Be(1);
+    }
+
+    [Fact]
+    public void Shorten_WhenBigIntegerExceedsDecimalRange_UsesFallbackWithoutThrowing()
+    {
+        var huge = BigInteger.Pow(10, 40);
+        FluentActions.Invoking(() => Millify.Shorten(huge)).Should().NotThrow();
+        var result = Millify.Shorten(huge);
+        result.Should().NotBeNullOrEmpty();
+        result.Should().EndWith("Y");
+    }
+
+    [Fact]
+    public void Shorten_WhenBigIntegerIsTooLargeForDoubleFallback_ThrowsOverflowExceptionWithGuidance()
+    {
+        var tooLargeForDouble = BigInteger.Pow(10, 400);
+        FluentActions.Invoking(() => Millify.Shorten(tooLargeForDouble))
+            .Should().Throw<OverflowException>()
+            .WithMessage("*representable range*");
+    }
+
+    [Fact]
+    public void Shorten_WhenSmartPrecisionIsTrue_UsesSingleFractionalDigitForScaledTens()
+    {
+        var options = new MillifyOptions(precision: 2, smartPrecision: true);
+        Millify.Shorten(12_345, options).Should().Be("12.3K");
+    }
+
+    [Fact]
+    public void Shorten_WhenSmartPrecisionIsTrue_UsesFullPrecisionForScaledOnes()
+    {
+        var options = new MillifyOptions(precision: 2, smartPrecision: true);
+        Millify.Shorten(5_500, options).Should().Be("5.5K");
+    }
+
+    [Fact]
+    public void Shorten_WhenSmartPrecisionIsTrue_UsesFullPrecisionWhenScaledMagnitudeIsBelowOne()
+    {
+        var options = new MillifyOptions(precision: 2, smartPrecision: true);
+        Millify.Shorten(0.123m, options).Should().Be("0.12");
+    }
+
+    [Fact]
+    public void Shorten_WhenBinaryScaleUsesNonIecStyleUnits_UppercasesEntireSuffix()
+    {
+        var units = new[] { "", "K", "M" };
+        var options = new MillifyOptions(precision: 1, scaleBase: MillifyScaleBase.Binary, units: units);
+        Millify.Shorten(2048, options).Should().Be("2K");
+    }
+
+    [Fact]
+    public void TrimTrailingZeros_WhenDecimalSeparatorIsEmpty_ReturnsOriginalString()
+    {
+        var trim = typeof(Millify).GetMethod("TrimTrailingZeros",
+            BindingFlags.Static | BindingFlags.NonPublic);
+        trim.Should().NotBeNull();
+        var result = (string)trim!.Invoke(null, ["12.50", ""])!;
+        result.Should().Be("12.50");
     }
 }
