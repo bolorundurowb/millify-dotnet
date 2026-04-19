@@ -1,41 +1,41 @@
-﻿namespace millify.Tests;
+﻿namespace MillifyDotnet.Tests;
 
 public class MillifyTests
 {
     [Fact]
-    public void Shorten_DefaultOptions()
+    public void Shorten_WithDefaultOptions_FormatsDoubleAsOnePointTwoK()
     {
         const double number = 1234.56;
         var result = Millify.Shorten(number);
         result.Should().Be("1.2K");
     }
-    
+
     [Fact]
-    public void Shorten_Integer()
+    public void Shorten_WithDefaultOptions_FormatsIntAsOnePointTwoM()
     {
         const int number = 1234567;
         var result = Millify.Shorten(number);
         result.Should().Be("1.2M");
     }
-    
+
     [Fact]
-    public void Shorten_Long()
+    public void Shorten_WithDefaultOptions_FormatsLongAsOnePointTwoG()
     {
         const long number = 1234567890L;
         var result = Millify.Shorten(number);
         result.Should().Be("1.2G");
     }
-    
+
     [Fact]
-    public void Shorten_Decimal()
+    public void Shorten_WithDefaultOptions_FormatsDecimalAsOnePointTwoK()
     {
         const decimal number = 1234.5m;
         var result = Millify.Shorten(number);
         result.Should().Be("1.2K");
     }
-    
+
     [Fact]
-    public void Shorten_Float()
+    public void Shorten_WithDefaultOptions_FormatsFloatAsOnePointTwoK()
     {
         const float number = 1234.5f;
         var result = Millify.Shorten(number);
@@ -43,7 +43,7 @@ public class MillifyTests
     }
 
     [Fact]
-    public void Shorten_CustomOptions()
+    public void Shorten_WithVaryingPrecisionAndUnits_FormatsLargeDoubleAsExpected()
     {
         const double number = 9876543210.98765;
         var options = new MillifyOptions(precision: 3);
@@ -58,13 +58,13 @@ public class MillifyTests
         result = Millify.Shorten(number, options);
         result.Should().Be("9.9 G");
 
-        options = new MillifyOptions(precision: 2, units: new[] {"B", "KB", "MB", "GB", "TB"});
+        options = new MillifyOptions(precision: 2, units: new[] { "B", "KB", "MB", "GB", "TB" });
         result = Millify.Shorten(number, options);
         result.Should().Be("9.88GB");
     }
 
     [Fact]
-    public void Shorten_NegativeNumber()
+    public void Shorten_WithNegativeValueAndPrecision_FormatsNegativeNinePointEightEightK()
     {
         var number = -9876.54321;
         var options = new MillifyOptions

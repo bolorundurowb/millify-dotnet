@@ -7,21 +7,38 @@
         <TargetFrameworks>netstandard1.6;netstandard2.0;netstandard2.1</TargetFrameworks>
         <Title>Millify</Title>
         <Authors>Winner-Timothy Bolorunduro</Authors>
-        <Description>Format large numbers into concise, human-readable strings (K, M, B) for .NET apps.</Description>
+        <Description>Format large numbers into concise, human-readable strings (K, M, G, and custom tiers) for .NET apps, with optional binary (IEC) scaling, BigInteger support, culture-aware decimal separators, decomposition APIs, and Span-based formatting.</Description>
         <Copyright>©2023-2026 Winner-Timothy Bolorunduro</Copyright>
         <PackageProjectUrl>https://github.com/bolorundurowb/millify-dotnet</PackageProjectUrl>
         <PackageLicenseUrl>https://github.com/bolorundurowb/millify-dotnet/blob/master/LICENSE</PackageLicenseUrl>
         <RepositoryUrl>https://github.com/bolorundurowb/millify-dotnet</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
-        <PackageTags>millify,millify-dotnet,number-formatting,human-readable,abbreviations,analytics,dashboards,netstandard</PackageTags>
-        <PackageReleaseNotes>- update dependencies</PackageReleaseNotes>
+        <PackageTags>millify,millify-dotnet,number-formatting,human-readable,abbreviations,analytics,dashboards,netstandard,biginteger,span,i18n</PackageTags>
+        <PackageReleaseNotes><![CDATA[1.1.0:
+- Add optional trimming of insignificant fractional zeros (default on; set TrimInsignificantZeros=false to preserve fixed-width fractions).
+- Add SmartPrecision to reduce fractional digits for larger scaled magnitudes while keeping finer detail near 1–10.
+- Add MillifyScaleBase (decimal 1000 vs binary 1024) with IEC-style default suffixes for binary mode.
+- Add BigInteger Shorten/Decompose with exact decimal scaling when representable, plus a controlled overflow path.
+- Add CultureInfo support for the decimal separator only (digit grouping stays disabled).
+- Add MillifiedNumber plus Decompose/FormatScaled for split formatting workflows (tooltips, charts, a11y).
+- Add TryFormat overloads writing into Span<char> (System.Memory referenced on netstandard1.6 and netstandard2.0).
+- Validate Units (non-empty, no null entries) on construction and when the Units property is set.
+- Fix incorrect casing logic that previously called ToUpperInvariant on the numeric text when Lowercase was true.
+
+Breaking change: default output may drop trailing fractional zeros (for example 1.0M becomes 1M) unless trimming is disabled.]]></PackageReleaseNotes>
         <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-        <Version>1.0.3</Version>
+        <Version>1.1.0</Version>
         <PackageReadmeFile>README.md</PackageReadmeFile>
+        <AssemblyVersion>1.1.0</AssemblyVersion>
+        <FileVersion>1.1.0</FileVersion>
     </PropertyGroup>
 
     <ItemGroup>
         <None Include="..\..\README.md" Pack="true" PackagePath="\"/>
+    </ItemGroup>
+
+    <ItemGroup Condition="'$(TargetFramework)' == 'netstandard1.6' Or '$(TargetFramework)' == 'netstandard2.0'">
+        <PackageReference Include="System.Memory" Version="4.5.5"/>
     </ItemGroup>
 </Project>
