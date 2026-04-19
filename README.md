@@ -1,108 +1,93 @@
 # millify-dotnet 📊
 
-[![Build, Test & Coverage](https://github.com/bolorundurowb/millify-dotnet/actions/workflows/build-and-test.yml/badge.svg)](https://github.com/bolorundurowb/millify-dotnet/actions/workflows/build-and-test.yml) [![codecov](https://codecov.io/gh/bolorundurowb/millify-dotnet/graph/badge.svg?token=8PIHY52HJS)](https://codecov.io/gh/bolorundurowb/millify-dotnet)  [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)  ![NuGet Version](https://img.shields.io/nuget/v/millify)
+[![Build, Test & Coverage](https://github.com/bolorundurowb/millify-dotnet/actions/workflows/build-and-test.yml/badge.svg)](https://github.com/bolorundurowb/millify-dotnet/actions/workflows/build-and-test.yml)
+[![codecov](https://codecov.io/gh/bolorundurowb/millify-dotnet/graph/badge.svg?token=8PIHY52HJS)](https://codecov.io/gh/bolorundurowb/millify-dotnet)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+![NuGet Version](https://img.shields.io/nuget/v/millify)
 
----
+`millify-dotnet` turns large numbers into short, human-readable strings for dashboards, analytics UIs, reports, and logs.
 
-## About Millify-Dotnet 📜
+Inspired by [millify (Node.js)](https://www.npmjs.com/package/millify).
 
-**Millify-Dotnet** is a lightweight and easy-to-use .NET library designed to convert long, unwieldy numbers into **pretty, human-readable strings**. Inspired by the popular [millify](https://www.npmjs.com/package/millify) NodeJS library, it simplifies the process of displaying large numbers in a clean and concise format. 🎯
+## Install
 
-Whether you're working with thousands, millions, or even trillions, **Millify-Dotnet** makes your numbers look neat and professional. Perfect for dashboards, reports, or any application where readability matters! ✨
-
----
-
-## Installation 📦
-
-You can install **Millify-Dotnet** via NuGet using one of the following methods:
-
-#### **Package Manager**
-```cmd
-Install-Package millify
-```
-
-#### **.NET CLI**
-```bash
+### .NET CLI
+```powershell
 dotnet add package millify
 ```
 
-#### **PackageReference**
+### Package Manager
+```powershell
+Install-Package millify
+```
+
+### PackageReference
 ```xml
 <PackageReference Include="millify" />
 ```
 
----
+## Quick start
 
-## Usage 🛠️
-
-### Add the Namespace
-Start by including the **MillifyDotnet** namespace in your code:
 ```csharp
 using MillifyDotnet;
+
+var a = Millify.Shorten(2500);      // 2.5K
+var b = Millify.Shorten(1024000);   // 1.0M
+var c = Millify.Shorten(-5300000);  // -5.3M
 ```
 
-### Shorten Numbers
-To convert a long number into a human-readable format, use the `Shorten` method:
+## API overview
+
+### `Millify.Shorten`
+
+Overloads:
+- `Shorten(long number, MillifyOptions? options = null)`
+- `Shorten(double number, MillifyOptions? options = null)`
+- `Shorten(decimal number, MillifyOptions? options = null)`
+
+Each returns a formatted string with a unit suffix (for example: `K`, `M`, `B`).
+
+## Customization with `MillifyOptions`
+
 ```csharp
-var result = Millify.Shorten(2500);
-// Output: 2.5K
+using MillifyDotnet;
 
-result = Millify.Shorten(1024000);
-// Output: 1.0M
+var options = new MillifyOptions(
+    precision: 2,
+    lowercase: true,
+    spaceBeforeUnit: true,
+    units: new[] { "", "k", "m", "b", "t" });
+
+var result = Millify.Shorten(1440000, options); // 1.44 m
 ```
 
----
+| Option | Type | Default | Description |
+|---|---|---|---|
+| `Precision` | `int` | `1` | Number of decimal places. Must be `>= 1`. |
+| `Lowercase` | `bool` | `false` | Outputs suffix in lowercase. |
+| `SpaceBeforeUnit` | `bool` | `false` | Adds a space between number and unit. |
+| `Units` | `string[]` | `{"", "K", "M", "B", "T", "P", "E"}` | Custom suffix list. |
 
-## Customize Output 🎨
+## Target frameworks
 
-**Millify-Dotnet** provides flexible options to tailor the output to your needs. Use the `MillifyOptions` class to configure the formatting:
+Library targets:
+- `netstandard1.6`
+- `netstandard2.0`
+- `netstandard2.1`
 
-### Example 1: Custom Precision and Lowercase
-```csharp
-var options = new MillifyOptions(precision: 3, lowercase: true);
-var result = Millify.Shorten(1024000, options);
-// Output: 1.024m
-```
+## For contributors
 
-### Example 2: Add Space and Custom Units
-```csharp
-var options = new MillifyOptions(spaceBeforeUnit: true, units: new[] {"B", "KB", "MB", "GB", "TB"});
-var result = Millify.Shorten(1440000, options);
-// Output: 1.44 MB
-```
+Contributions are welcome.
 
----
+### Local development
+1. Clone the repository.
+2. Restore/build from the solution in Rider or with `dotnet`.
+3. Run tests in `src\millify.Tests`.
 
-## Options ⚙️
+### Project layout
+- `src\millify` — library source
+- `src\millify.Tests` — test project
 
-The `MillifyOptions` class allows you to customize the output with the following properties:
+## License
 
-| Name              | Type            | Default                          | Description                                                                 |
-|-------------------|-----------------|----------------------------------|-----------------------------------------------------------------------------|
-| `Precision`       | `int`           | `1`                              | Number of decimal places to display.                                        |
-| `Lowercase`       | `bool`          | `false`                          | Use lowercase abbreviations (e.g., `1.5k` instead of `1.5K`).               |
-| `SpaceBeforeUnit` | `bool`          | `false`                          | Add a space between the number and the abbreviation (e.g., `1.5 K`).        |
-| `Units`           | `string[]`      | `['', 'K', 'M', 'B', 'T', 'P', 'E']` | Custom unit abbreviations to use for formatting.                           |
-
----
-
-## Why Use Millify-Dotnet? 🌟
-
-- **Simple and Intuitive**: Convert numbers with just one method call.
-- **Customizable**: Tailor the output to fit your needs with flexible options.
-- **Lightweight**: Minimal overhead, maximum performance.
-- **Human-Readable**: Make large numbers easy to understand at a glance.
-
----
-
-## License 📜
-
-**Millify-Dotnet** is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
-
----
-
-## Get Started Today! 🎉
-
-Whether you're building a dashboard, generating reports, or just need to display large numbers in a clean format, **Millify-Dotnet** is here to help. Install the package, follow the examples, and start simplifying your numbers today! ⏱️
-
-**Happy Coding!** 🚀
+MIT. See [LICENSE](LICENSE).
