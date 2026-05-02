@@ -7,8 +7,6 @@
 
 **Millify** is a small .NET library that turns large counts and measurements into short, readable labels (`2.5K`, `1.44M`, `1Mi`, …). Use it anywhere you would otherwise hand-roll suffix logic: analytics tiles, tables, logs, charts, and mobile or web API payloads.
 
-The [NuGet package](https://www.nuget.org/packages/millify/) is named **millify**. This repository is **millify-dotnet**; the API lives in the `MillifyDotnet` namespace.
-
 Conceptually similar to the [millify](https://www.npmjs.com/package/millify) package for JavaScript.
 
 ## What you get
