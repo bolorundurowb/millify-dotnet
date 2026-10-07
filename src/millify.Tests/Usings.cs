@@ -1,3 +1,3 @@
-global using FluentAssertions;
 global using MillifyDotnet;
+global using OmniAssert;
 global using Xunit;

@@ -7,14 +7,14 @@ public class MillifyOptionsTests
     {
         var options = new MillifyOptions();
 
-        options.Precision.Should().Be(1);
-        options.Lowercase.Should().BeFalse();
-        options.SpaceBeforeUnit.Should().BeFalse();
-        options.ScaleBase.Should().Be(MillifyScaleBase.Decimal);
-        options.TrimInsignificantZeros.Should().BeTrue();
-        options.SmartPrecision.Should().BeFalse();
-        options.Culture.Should().BeNull();
-        options.Units.Should().Equal(string.Empty, "k", "m", "g", "t", "p", "e", "z", "y");
+        options.Precision.Must().Be(1);
+        options.Lowercase.Must().BeFalse();
+        options.SpaceBeforeUnit.Must().BeFalse();
+        options.ScaleBase.Must().Be(MillifyScaleBase.Decimal);
+        options.TrimInsignificantZeros.Must().BeTrue();
+        options.SmartPrecision.Must().BeFalse();
+        options.Culture.Must().BeNull();
+        options.Units.Must().BeSequenceEqual([string.Empty, "k", "m", "g", "t", "p", "e", "z", "y"]);
     }
 
     [Fact]
@@ -27,57 +27,54 @@ public class MillifyOptionsTests
 
         var options = new MillifyOptions(precision, lowercase, spaceBeforeUnit, units);
 
-        options.Precision.Should().Be(precision);
-        options.Lowercase.Should().Be(lowercase);
-        options.SpaceBeforeUnit.Should().Be(spaceBeforeUnit);
-        options.Units.Should().Equal(units);
+        options.Precision.Must().Be(precision);
+        options.Lowercase.Must().Be(lowercase);
+        options.SpaceBeforeUnit.Must().Be(spaceBeforeUnit);
+        options.Units.Must().BeSequenceEqual(units);
     }
 
     [Fact]
     public void MillifyOptions_WhenPrecisionIsZero_ThrowsArgumentException()
     {
-        FluentActions.Invoking(() => new MillifyOptions(0))
-            .Should().Throw<ArgumentException>()
-            .WithMessage("Invalid precision value.");
+        Action act = () => new MillifyOptions(0);
+        act.Throws<ArgumentException>().WithMessage("Invalid precision value.");
     }
 
     [Fact]
     public void MillifyOptions_WhenUnitsArrayIsEmpty_ThrowsArgumentException()
     {
-        FluentActions.Invoking(() => new MillifyOptions(units: []))
-            .Should().Throw<ArgumentException>()
-            .WithMessage("Units must contain at least one entry.*");
+        Action act = () => new MillifyOptions(units: []);
+        act.Throws<ArgumentException>().WithMessageMatching("Units must contain at least one entry.*");
     }
 
     [Fact]
     public void MillifyOptions_WhenUnitsContainsNull_ThrowsArgumentException()
     {
-        FluentActions.Invoking(() => new MillifyOptions(units: ["", "K", null!]))
-            .Should().Throw<ArgumentException>()
-            .WithMessage("Units[2] must not be null.*");
+        Action act = () => new MillifyOptions(units: ["", "K", null!]);
+        act.Throws<ArgumentException>().WithMessageMatching("Units[2] must not be null.*");
     }
 
     [Fact]
     public void MillifyOptions_WhenUnitsPropertySetToEmptyArray_ThrowsArgumentException()
     {
         var options = new MillifyOptions();
-        FluentActions.Invoking(() => options.Units = [])
-            .Should().Throw<ArgumentException>();
+        Action act = () => options.Units = [];
+        act.Throws<ArgumentException>();
     }
 
     [Fact]
     public void MillifyOptions_WhenUnitsPropertySetToNull_ThrowsArgumentNullException()
     {
         var options = new MillifyOptions();
-        FluentActions.Invoking(() => options.Units = null!)
-            .Should().Throw<ArgumentNullException>()
-            .WithParameterName(nameof(MillifyOptions.Units));
+        Action act = () => options.Units = null!;
+        act.Throws<ArgumentNullException>()
+            .Exception.ParamName.Must().Be(nameof(MillifyOptions.Units));
     }
 
     [Fact]
     public void MillifyOptions_WhenScaleBaseIsBinaryAndUnitsOmitted_UsesDefaultBinarySuffixes()
     {
         var options = new MillifyOptions(scaleBase: MillifyScaleBase.Binary, units: null);
-        options.Units.Should().Equal(string.Empty, "ki", "mi", "gi", "ti", "pi", "ei", "zi", "yi");
+        options.Units.Must().BeSequenceEqual([string.Empty, "ki", "mi", "gi", "ti", "pi", "ei", "zi", "yi"]);
     }
 }

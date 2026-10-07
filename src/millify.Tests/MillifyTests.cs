@@ -7,7 +7,7 @@ public class MillifyTests
     {
         const double number = 1234.56;
         var result = Millify.Shorten(number);
-        result.Should().Be("1.2K");
+        result.Must().Be("1.2K");
     }
 
     [Fact]
@@ -15,7 +15,7 @@ public class MillifyTests
     {
         const int number = 1234567;
         var result = Millify.Shorten(number);
-        result.Should().Be("1.2M");
+        result.Must().Be("1.2M");
     }
 
     [Fact]
@@ -23,7 +23,7 @@ public class MillifyTests
     {
         const long number = 1234567890L;
         var result = Millify.Shorten(number);
-        result.Should().Be("1.2G");
+        result.Must().Be("1.2G");
     }
 
     [Fact]
@@ -31,7 +31,7 @@ public class MillifyTests
     {
         const decimal number = 1234.5m;
         var result = Millify.Shorten(number);
-        result.Should().Be("1.2K");
+        result.Must().Be("1.2K");
     }
 
     [Fact]
@@ -39,7 +39,7 @@ public class MillifyTests
     {
         const float number = 1234.5f;
         var result = Millify.Shorten(number);
-        result.Should().Be("1.2K");
+        result.Must().Be("1.2K");
     }
 
     [Fact]
@@ -48,19 +48,19 @@ public class MillifyTests
         const double number = 9876543210.98765;
         var options = new MillifyOptions(precision: 3);
         var result = Millify.Shorten(number, options);
-        result.Should().Be("9.877G");
+        result.Must().Be("9.877G");
 
         options = new MillifyOptions(precision: 2, lowercase: true);
         result = Millify.Shorten(number, options);
-        result.Should().Be("9.88g");
+        result.Must().Be("9.88g");
 
         options = new MillifyOptions(spaceBeforeUnit: true);
         result = Millify.Shorten(number, options);
-        result.Should().Be("9.9 G");
+        result.Must().Be("9.9 G");
 
         options = new MillifyOptions(precision: 2, units: ["B", "KB", "MB", "GB", "TB"]);
         result = Millify.Shorten(number, options);
-        result.Should().Be("9.88GB");
+        result.Must().Be("9.88GB");
     }
 
     [Fact]
@@ -75,6 +75,6 @@ public class MillifyTests
         };
 
         var result = Millify.Shorten(number, options);
-        result.Should().Be("-9.88K");
+        result.Must().Be("-9.88K");
     }
 }
